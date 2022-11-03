@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NNTPClient.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="1000">
+        Title="Usenet v0.1" Height="450" Width="1000">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
@@ -31,10 +31,10 @@
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
 
-            <TreeView>
-                
+            <TreeView ItemsSource="{Binding Subscriptions}">
+
             </TreeView>
-            
+
             <Grid Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
