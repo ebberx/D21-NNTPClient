@@ -24,7 +24,7 @@ namespace NNTPClient.Model {
 			stream = tcpClient.GetStream();
 
 			// Wait for 200 response
-			StreamReader sr = new StreamReader(stream);
+			StreamReader sr = new(stream);
 			while (!stream.DataAvailable) ;
 			string? line = sr.ReadLine();
             if (line is null)
@@ -49,13 +49,24 @@ namespace NNTPClient.Model {
 		}
 		*/
 
+		public void PostArticle() {
+            
+			if (stream is null)
+                throw new Exception("Not connected to server");
+
+            StreamWriter sw = new(stream);
+            StreamReader sr = new(stream);
+
+
+        }
+
 		public void Authenticate(string user, string pass) {
 
 			if (stream is null)
 				throw new Exception("Not connected to server");
 
-			StreamWriter sw = new StreamWriter(stream);
-			StreamReader sr = new StreamReader(stream);
+			StreamWriter sw = new(stream);
+			StreamReader sr = new(stream);
 
 			// Write user
 			sw.Write("authinfo user " + user + "\r\n");
@@ -90,8 +101,8 @@ namespace NNTPClient.Model {
             if (stream is null)
                 throw new Exception("Not connected to server");
 
-            StreamWriter sw = new StreamWriter(stream);
-			StreamReader sr = new StreamReader(stream);
+            StreamWriter sw = new(stream);
+			StreamReader sr = new(stream);
 
 			// Query the server for the body of the article
 			sw.Write("body " + article.Number + "\r\n");
@@ -125,8 +136,8 @@ namespace NNTPClient.Model {
             if (stream is null)
                 throw new Exception("Not connected to server");
 
-            StreamWriter sw = new StreamWriter(stream);
-			StreamReader sr = new StreamReader(stream);
+            StreamWriter sw = new(stream);
+			StreamReader sr = new(stream);
 
 			List<Article> articles = new List<Article>();
 
@@ -180,13 +191,13 @@ namespace NNTPClient.Model {
                 throw new Exception("Not connected to server");
 
             // Send request
-            StreamWriter sw = new StreamWriter(stream);
+            StreamWriter sw = new(stream);
 			sw.Write("group "+ ng.Group +"\r\n");
 			sw.Flush();
 
 			// Wait for response
 			while (!stream.DataAvailable) ;
-			StreamReader sr = new StreamReader(stream);
+			StreamReader sr = new(stream);
 			
 			// Handle response
 			string[]? line = sr.ReadLine()?.Split(' ');
@@ -207,14 +218,14 @@ namespace NNTPClient.Model {
                 throw new Exception("Not connected to server");
 
             // Send request
-            StreamWriter sw = new StreamWriter(stream);
+            StreamWriter sw = new(stream);
 			sw.Write("list\r\n");
 			sw.Flush();
 
 			// Wait for response
 			while (!stream.DataAvailable) ;
 
-			StreamReader sr = new StreamReader(stream);
+			StreamReader sr = new(stream);
 			List<NewsGroup> groups = new List<NewsGroup>();
 
 			while (true) {

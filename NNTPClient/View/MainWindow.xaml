@@ -18,7 +18,8 @@
         <StackPanel Orientation="Horizontal">
             <Button x:Name="testButton" Click="onGetNewsGroupsClick">Get News Groups</Button>
             <Button x:Name="testButton3" Click="onGetArticlesClick">Get Articles</Button>
-            <Button x:Name="testButton4" Click="onGetArticleClick">Read Article</Button>
+            <Button x:Name="testButton4" Width="50" Click="onGetArticleClick">Read</Button>
+            <Button x:Name="testButton5" Width="50" Click="onPostArticleClick">Post</Button>
         </StackPanel>
 
         <Grid Grid.Column="1" Grid.Row="2">
