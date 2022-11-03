@@ -13,13 +13,43 @@ namespace NNTPClient.ViewModel {
 	public class MainWindowViewModel : Bindable {
 
 		NNTPSession session;
-		public ObservableCollection<NewsGroup> NewsGroups { get { return newsGroups; } set { newsGroups = value; propertyIsChanged(); } }
-		private ObservableCollection<NewsGroup> newsGroups;
-		public ObservableCollection<Article> Articles { get { return articles; } set { articles = value; propertyIsChanged(); } }
-		private ObservableCollection<Article> articles;
+		public ObservableCollection<NewsGroup> NewsGroups { 
+			get {
+                if (newsGroups is null)
+                    throw new ArgumentNullException();
+                return newsGroups; 
+			} 
+			set { 
+				newsGroups = value; 
+				propertyIsChanged(); 
+			} 
+		}
+		private ObservableCollection<NewsGroup>? newsGroups;
+		public ObservableCollection<Article> Articles { 
+			get {
+                if (articles is null)
+                    throw new ArgumentNullException();
+                return articles; 
+			} 
+			set { 
+				articles = value; 
+				propertyIsChanged();
+			} 
+		}
+		private ObservableCollection<Article>? articles;
 
-		public Article Article { get { return article; } set { article = value; propertyIsChanged(); } }
-		private Article article;
+		public Article Article { 
+			get { 
+				if(article is null)
+					throw new ArgumentNullException();
+				return article; 
+			} 
+			set { 
+				article = value; 
+				propertyIsChanged(); 
+			}
+		}
+		private Article? article;
 
 		public MainWindowViewModel() {
 			session = new NNTPSession("news.dotsrc.org", "esbe4783@easv365.dk", "ed0189");
