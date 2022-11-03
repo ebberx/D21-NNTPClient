@@ -12,11 +12,8 @@ using System.Windows.Shapes;
 namespace NNTPClient.Model {
 	public class NNTPSession {
 
-		TcpClient tcpClient;
-		Thread readThread;
-		NetworkStream stream;
-
-		bool runReadThread = true;
+		TcpClient? tcpClient;
+		NetworkStream? stream;
 
 		public NNTPSession(string host, string user, string pass) {
 			tcpClient = new TcpClient(host, 119);
@@ -26,15 +23,13 @@ namespace NNTPClient.Model {
 
 			stream = tcpClient.GetStream();
 
-			// Start read thread
-			readThread = new Thread(new ThreadStart(ReadToConsole));
-			//readThread.Start();
-
 			// Wait for 200 response
 			StreamReader sr = new StreamReader(stream);
 			while (!stream.DataAvailable) ;
-			string line = sr.ReadLine();
-			if (!line.Contains("200"))
+			string? line = sr.ReadLine();
+            if (line is null)
+                throw new ArgumentNullException();
+            if (!line.Contains("200"))
 				throw new InvalidDataException("Expected '200 news.sunsite.dk NNRP Service Ready - staff@sunsite.dk (posting ok).'");
 			Debug.WriteLine(line);
 
@@ -42,18 +37,24 @@ namespace NNTPClient.Model {
 			Authenticate(user, pass);
 		}
 
+		/* DEPRECATED
 		public void ReadToConsole() {
 			StreamReader sr = new StreamReader(stream);
 			while (tcpClient.Available > 0) {
-				string line = sr.ReadLine();
+				string? line = sr.ReadLine();
 				if (line is null || String.IsNullOrEmpty(line))
 					continue;
 				Debug.WriteLine(line);
 			}
 		}
+		*/
 
 		public void Authenticate(string user, string pass) {
-			StreamWriter sw = new StreamWriter(tcpClient.GetStream());
+
+			if (stream is null)
+				throw new Exception("Not connected to server");
+
+			StreamWriter sw = new StreamWriter(stream);
 			StreamReader sr = new StreamReader(stream);
 
 			// Write user
@@ -63,6 +64,9 @@ namespace NNTPClient.Model {
 			// Expect 381 response
 			while (!stream.DataAvailable) ;
 			string? line = sr.ReadLine();
+			if (line is null)
+				throw new ArgumentNullException();
+
 			if (!line.Contains("381"))
 				throw new InvalidDataException("Expected '381 PASS required'");
 			Debug.WriteLine(line);
@@ -74,13 +78,19 @@ namespace NNTPClient.Model {
 			// Expect 281 response
 			while (!stream.DataAvailable) ;
 			line = sr.ReadLine();
-			if (!line.Contains("281"))
+            if (line is null)
+                throw new ArgumentNullException();
+
+            if (!line.Contains("281"))
 				throw new InvalidDataException("Expected '281 Ok'");
 			Debug.WriteLine(line);
 		}
 
 		public Article GetArticle(Article article) {
-			StreamWriter sw = new StreamWriter(stream);
+            if (stream is null)
+                throw new Exception("Not connected to server");
+
+            StreamWriter sw = new StreamWriter(stream);
 			StreamReader sr = new StreamReader(stream);
 
 			// Query the server for the body of the article
@@ -93,8 +103,11 @@ namespace NNTPClient.Model {
 			while (true) {
 				string? line = sr.ReadLine();
 
-				// Skip '222' line
-				if (line.StartsWith("222"))
+				if (line is null)
+					continue;
+
+                // Skip '222' line
+                if (line.StartsWith("222"))
 					continue;
 				// Halt on end of body or '423' response
 				if (line.StartsWith(".") || line.StartsWith("423"))
@@ -108,7 +121,11 @@ namespace NNTPClient.Model {
 		}
 		
 		public List<Article> GetArticlesInGroup(NewsGroup ng) {
-			StreamWriter sw = new StreamWriter(stream);
+
+            if (stream is null)
+                throw new Exception("Not connected to server");
+
+            StreamWriter sw = new StreamWriter(stream);
 			StreamReader sr = new StreamReader(stream);
 
 			List<Article> articles = new List<Article>();
@@ -158,8 +175,12 @@ namespace NNTPClient.Model {
 		
 
 		public NewsGroup GetGroupMetaData(NewsGroup ng) {
-			// Send request
-			StreamWriter sw = new StreamWriter(stream);
+
+            if (stream is null)
+                throw new Exception("Not connected to server");
+
+            // Send request
+            StreamWriter sw = new StreamWriter(stream);
 			sw.Write("group "+ ng.Group +"\r\n");
 			sw.Flush();
 
@@ -168,8 +189,10 @@ namespace NNTPClient.Model {
 			StreamReader sr = new StreamReader(stream);
 			
 			// Handle response
-			string[]? line = sr.ReadLine().Split(' ');
-			int est = Int32.Parse(line[1]);
+			string[]? line = sr.ReadLine()?.Split(' ');
+            if (line is null)
+                throw new ArgumentNullException();
+            int est = Int32.Parse(line[1]);
 			int first = Int32.Parse(line[2]);
 			int last = Int32.Parse(line[3]);
 
@@ -180,8 +203,11 @@ namespace NNTPClient.Model {
 		}
 
 		public List<NewsGroup> GetNewsGroups() {
-			// Send request
-			StreamWriter sw = new StreamWriter(stream);
+            if (stream is null)
+                throw new Exception("Not connected to server");
+
+            // Send request
+            StreamWriter sw = new StreamWriter(stream);
 			sw.Write("list\r\n");
 			sw.Flush();
 
