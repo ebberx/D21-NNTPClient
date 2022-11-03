@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NNTPClient.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="1000">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
@@ -14,6 +14,12 @@
             <RowDefinition Height="1*" />
             <RowDefinition Height="8*" />
         </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <Button x:Name="testButton" Click="onGetNewsGroupsClick">Get News Groups</Button>
+            <Button x:Name="testButton3" Click="onGetArticlesClick">Get Articles</Button>
+            <Button x:Name="testButton4" Click="onGetArticleClick">Read Article</Button>
+        </StackPanel>
 
         <Grid Grid.Column="1" Grid.Row="2">
             <Grid.ColumnDefinitions>
@@ -24,11 +30,9 @@
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Vertical">
-                <Button x:Name="testButton" Height="50" Click="onGetNewsGroupsClick">Get News Groups</Button>
-                <Button x:Name="testButton3" Height="50" Click="onGetArticlesClick">Get Articles</Button>
-                <Button x:Name="testButton4" Height="50" Click="onGetArticleClick">Read Article</Button>
-            </StackPanel>
+            <TreeView>
+                
+            </TreeView>
             
             <Grid Grid.Column="1">
                 <Grid.ColumnDefinitions>
