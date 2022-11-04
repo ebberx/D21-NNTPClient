@@ -1,13 +1,9 @@
 ﻿using NNTPClient.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NNTPClient.ViewModel
 {
-    public class LoginViewModel : Bindable {
+    public class LoginViewModel : Bindable
+    {
 
         public string Server { get { return server; } set { server = value; propertyIsChanged(); } }
         private string server;

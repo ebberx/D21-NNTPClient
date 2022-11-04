@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NNTPClient.Model
+﻿namespace NNTPClient.Model
 {
-    public class LoginDetails {
-        
+    public class LoginDetails
+    {
+
         public string Server { get; init; }
         public string User { get; init; }
         public string Pass { get; init; }

@@ -1,8 +1,7 @@
-﻿using NNTPClient.ViewModel;
+﻿using NNTPClient.Model;
+using NNTPClient.ViewModel;
 using System;
-using System.IO;
 using System.Windows;
-using NNTPClient.Model;
 
 namespace NNTPClient.View
 {

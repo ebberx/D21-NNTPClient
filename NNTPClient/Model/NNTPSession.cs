@@ -28,7 +28,7 @@ namespace NNTPClient.Model
 				return false;
 			if (!line.Contains("200"))
 				return false;
-				//throw new InvalidDataException("Expected '200 news.sunsite.dk NNRP Service Ready - staff@sunsite.dk (posting ok).'");
+			//throw new InvalidDataException("Expected '200 news.sunsite.dk NNRP Service Ready - staff@sunsite.dk (posting ok).'");
 			Debug.WriteLine(line);
 
 			// Then Authenticate
@@ -51,8 +51,8 @@ namespace NNTPClient.Model
 		public static int PostArticle(NewsGroup ng, string subject, string from, string body) {
 			// Debug
 			Debug.WriteLine($"group: {ng.Group} | {subject} | {from}");
-			Debug.Write(body+"\n");
-			
+			Debug.Write(body + "\n");
+
 			// setup reading / writing
 			if (stream is null)
 				throw new Exception("Not connected to server");
@@ -64,7 +64,7 @@ namespace NNTPClient.Model
 			sw.Flush();
 
 			// Await
-            while (!stream.DataAvailable) ;
+			while (!stream.DataAvailable) ;
 
 			//Expect '340' response
 			string? line = sr.ReadLine();
@@ -72,19 +72,19 @@ namespace NNTPClient.Model
 				throw new InvalidDataException("Not allowed to post.");
 
 			sw.Write("from: " + from + "\r\n");
-            sw.Write("subject: " + subject + "\r\n");
-            //sw.Write("Newsgroup: " + ng.Group + "\r\n");
-            sw.Write("Newsgroups: " + "dk.test" + "\r\n");
-            sw.Write("\r\n");
-            sw.Write(body);
+			sw.Write("subject: " + subject + "\r\n");
+			//sw.Write("Newsgroup: " + ng.Group + "\r\n");
+			sw.Write("Newsgroups: " + "dk.test" + "\r\n");
+			sw.Write("\r\n");
+			sw.Write(body);
 			sw.Write("\r\n.\r\n");
 			sw.Flush();
 
-            // Await
-            while (!stream.DataAvailable) ;
+			// Await
+			while (!stream.DataAvailable) ;
 
-            // Handle response
-            line = sr.ReadLine();
+			// Handle response
+			line = sr.ReadLine();
 			Debug.WriteLine(line);
 			if (line is not null) {
 				if (line.StartsWith("240"))
@@ -94,7 +94,7 @@ namespace NNTPClient.Model
 			}
 			else
 				return -1;
-        }
+		}
 
 		public static void Authenticate(string user, string pass) {
 
