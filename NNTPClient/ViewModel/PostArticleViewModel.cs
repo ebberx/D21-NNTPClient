@@ -5,8 +5,8 @@ namespace NNTPClient.ViewModel
     public class PostArticleViewModel : Bindable
     {
 
-        public NewsGroup PostingGroup { get { return postingGroup; } set { postingGroup = value; propertyIsChanged(); } }
-        private NewsGroup postingGroup;
+        public string PostingGroup { get { return postingGroup; } set { postingGroup = value; propertyIsChanged(); } }
+        private string postingGroup;
 
         public string Subject { get { return subject; } set { subject = value; propertyIsChanged(); } }
         private string subject;
@@ -15,7 +15,7 @@ namespace NNTPClient.ViewModel
         private string body;
 
 
-        public PostArticleViewModel(NewsGroup group) {
+        public PostArticleViewModel(string group) {
             PostingGroup = group;
         }
 

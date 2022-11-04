@@ -48,9 +48,9 @@ namespace NNTPClient.Model
 		}
 		*/
 
-		public static int PostArticle(NewsGroup ng, string subject, string from, string body) {
+		public static int PostArticle(string ng, string subject, string from, string body) {
 			// Debug
-			Debug.WriteLine($"group: {ng.Group} | {subject} | {from}");
+			Debug.WriteLine($"group: {ng} | {subject} | {from}");
 			Debug.Write(body + "\n");
 
 			// setup reading / writing

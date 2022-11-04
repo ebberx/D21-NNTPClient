@@ -17,9 +17,9 @@
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Height="30" VerticalAlignment="Center" Margin="10" Text="{Binding PostingGroup.Group}"></TextBlock>
-        <TextBlock Grid.Row="1" VerticalAlignment="Center">Subject:</TextBlock>
-        <TextBox Grid.Row="1" Margin="50 0 10 0" Height="20" VerticalAlignment="Center" TextWrapping="NoWrap" Text="{Binding Subject}"></TextBox>
+        <TextBlock Grid.Row="0" Height="30" VerticalAlignment="Center" Margin="10" Text="{Binding PostingGroup}"></TextBlock>
+        <TextBlock Grid.Row="1" VerticalAlignment="Center" Margin="10 0 0 0">Subject:</TextBlock>
+        <TextBox Grid.Row="1" Margin="56 0 10 0" Height="20" VerticalAlignment="Center" TextWrapping="NoWrap" Text="{Binding Subject}"></TextBox>
         <TextBox Grid.Row="2" TextWrapping="NoWrap" AcceptsReturn="True" Text="{Binding Body}"></TextBox>
 
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">

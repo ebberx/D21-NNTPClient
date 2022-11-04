@@ -1,5 +1,4 @@
-﻿using NNTPClient.Model;
-using NNTPClient.ViewModel;
+﻿using NNTPClient.ViewModel;
 using System;
 using System.Windows;
 
@@ -13,7 +12,7 @@ namespace NNTPClient.View
 
         PostArticleViewModel viewModel;
 
-        public PostArticleView(Action onClose, NewsGroup group) {
+        public PostArticleView(Action onClose, string group) {
             InitializeComponent();
 
             // Setup viewmodel as data context

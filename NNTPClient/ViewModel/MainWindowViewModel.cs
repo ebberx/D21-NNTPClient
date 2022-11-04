@@ -79,7 +79,7 @@ namespace NNTPClient.ViewModel
 		public bool showingPostWindow = false;
 		public void PostArticleWindow(NewsGroup ng) {
 			if (!showingPostWindow) {
-				PostArticleView postView = new(() => { showingPostWindow = false; }, ng);
+				PostArticleView postView = new(() => { showingPostWindow = false; }, "Posting in: " + ng.Group);
 				postView.Show();
 				showingPostWindow = true;
 			}
