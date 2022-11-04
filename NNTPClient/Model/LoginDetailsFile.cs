@@ -11,11 +11,11 @@ namespace NNTPClient.Model
                 return new LoginDetails("", "", "");
 
             string[] content = File.ReadAllText("login.conf").Split('\n');
-            return new LoginDetails(content[0], content[1], content[2]);
+            return new LoginDetails(content[0], content[1], Base64.Base64Decode(content[2]));
         }
 
         public void SaveLoginDetails(LoginDetails ld) {
-            string details = ld.Server + "\n" + ld.User + "\n" + ld.Pass + "\n";
+            string details = ld.Server + "\n" + ld.User + "\n" + Base64.Base64Encode(ld.Pass) + "\n";
             File.WriteAllText("login.conf", details);
         }
     }
